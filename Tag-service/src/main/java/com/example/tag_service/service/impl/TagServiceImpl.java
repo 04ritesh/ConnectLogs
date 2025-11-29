@@ -34,4 +34,16 @@ public class TagServiceImpl implements TagService {
 
         return ids;
     }
+
+    @Override
+    public List<Tag> getAllTags() {   // <-- ADD THIS
+        return tagRepository.findAll();
+    }
+
+    @Override
+    public Tag getTagById(Long id) {
+        return tagRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tag not found with id: " + id));
+    }
+
 }
