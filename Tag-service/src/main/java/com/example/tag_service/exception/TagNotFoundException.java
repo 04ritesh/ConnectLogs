@@ -1,4 +1,4 @@
-package com.example.Tag_service.exception;
+package com.example.tag_service.exception;
 
 public class TagNotFoundException extends RuntimeException {
     public TagNotFoundException(String message) {

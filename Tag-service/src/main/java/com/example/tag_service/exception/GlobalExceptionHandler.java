@@ -1,4 +1,4 @@
-package com.example.Tag_service.exception;
+package com.example.tag_service.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,9 +1,9 @@
-package com.example.Tag_service;
+package com.example.tag_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.example.tag_service")
 public class TagServiceApplication {
 
 	public static void main(String[] args) {

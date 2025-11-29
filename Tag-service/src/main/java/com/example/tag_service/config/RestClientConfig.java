@@ -1,4 +1,4 @@
-package com.example.Experience_service.config;
+package com.example.tag_service.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,3 +11,4 @@ public class RestClientConfig {
         return RestClient.builder().build();
     }
 }
+

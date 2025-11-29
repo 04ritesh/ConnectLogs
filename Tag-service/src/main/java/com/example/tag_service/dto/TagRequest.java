@@ -1,4 +1,4 @@
-package com.example.Tag_service.dto;
+package com.example.tag_service.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
