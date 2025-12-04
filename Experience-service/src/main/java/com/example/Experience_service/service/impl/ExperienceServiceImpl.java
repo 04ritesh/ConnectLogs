@@ -9,7 +9,10 @@ import com.example.Experience_service.repository.ExperienceRepository;
 import com.example.Experience_service.repository.ExperienceTagRepository;
 import com.example.Experience_service.service.ExperienceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,6 +26,8 @@ public class ExperienceServiceImpl implements ExperienceService {
 
     @Override
     public Experience createExperience(ExperienceRequest request, Long userId) {
+
+
 
         Experience exp = new Experience();
         exp.setUserId(userId);
@@ -48,4 +53,19 @@ public class ExperienceServiceImpl implements ExperienceService {
 
         return saved;
     }
+
+    @Override
+    public Experience getExperienceById(Long id) {
+        return experienceRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Experience not found with id: " + id));
+    }
+
+    @Override
+    @Transactional
+    public void updateLikesCount(Long expId, int count) {
+        experienceRepository.updateLikesCount(expId, count);
+    }
+
+
+
 }
