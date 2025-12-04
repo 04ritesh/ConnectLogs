@@ -19,24 +19,18 @@ public class LikeServiceImpl implements LikeService {
     @Override
     @Transactional
     public void likeExperience(Long expId, Long userId) {
-        // Check if experience exists (commented for testing)
-        // try {
-        //     restClient.get()
-        //             .uri("/experience/{id}", expId)
-        //             .retrieve()
-        //             .body(ExperienceResponse.class);
-        // } catch (Exception e) {
-        //     throw new RuntimeException("Experience with id " + expId + " not found");
-        // }
+        System.out.println("Liking experience: " + expId + " by user: " + userId);
         
-        if (!likeRepository.existsByExperienceIdAndUserId(expId, userId)) {
-            likeRepository.save(new Likes(expId, userId));
+        boolean alreadyLiked = likeRepository.existsByExperienceIdAndUserId(expId, userId);
+        System.out.println("Already liked: " + alreadyLiked);
+        
+        if (!alreadyLiked) {
+            Likes like = new Likes(expId, userId);
+            Likes saved = likeRepository.save(like);
+            System.out.println("Saved like with ID: " + saved.getId());
             
-            // Update likes count in Experience service
-            int newCount = likeRepository.countByExperienceId(expId);
-            restClient.put()
-                    .uri("/experience/{id}/likes?count={count}", expId, newCount)
-                    .retrieve();
+            int count = likeRepository.countByExperienceId(expId);
+            System.out.println("Current likes count: " + count);
         }
     }
 
@@ -45,11 +39,11 @@ public class LikeServiceImpl implements LikeService {
     public void unlikeExperience(Long expId, Long userId) {
         likeRepository.deleteByExperienceIdAndUserId(expId, userId);
         
-        // Update likes count in Experience service
-        int newCount = likeRepository.countByExperienceId(expId);
-        restClient.put()
-                .uri("/experience/{id}/likes?count={count}", expId, newCount)
-                .retrieve();
+        // Update likes count in Experience service (disabled for testing)
+        // int newCount = likeRepository.countByExperienceId(expId);
+        // restClient.put()
+        //         .uri("/experience/{id}/likes?count={count}", expId, newCount)
+        //         .retrieve();
     }
 
     @Override
@@ -59,7 +53,9 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public int getLikesCount(Long expId) {
-        return likeRepository.countByExperienceId(expId);
+        int count = likeRepository.countByExperienceId(expId);
+        System.out.println("Getting likes count for experience " + expId + ": " + count);
+        return count;
     }
 
     @Override

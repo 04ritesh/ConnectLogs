@@ -1,6 +1,7 @@
 package com.example.Experience_service.service.impl;
 
 import com.example.Experience_service.client.TagClient;
+import com.example.Experience_service.client.LikesClient;
 import com.example.Experience_service.dto.ExperienceRequest;
 import com.example.Experience_service.entity.Experience;
 import com.example.Experience_service.entity.ExperienceTag;
@@ -23,6 +24,7 @@ public class ExperienceServiceImpl implements ExperienceService {
     private final ExperienceRepository experienceRepository;
     private final ExperienceTagRepository experienceTagRepository;
     private final TagClient tagClient;
+    private final LikesClient likesClient;
 
     @Override
     public Experience createExperience(ExperienceRequest request, Long userId) {
@@ -56,8 +58,19 @@ public class ExperienceServiceImpl implements ExperienceService {
 
     @Override
     public Experience getExperienceById(Long id) {
-        return experienceRepository.findById(id)
+        Experience experience = experienceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Experience not found with id: " + id));
+        
+        // Fetch current likes count from Likes service
+        try {
+            Integer likesCount = likesClient.getLikesCount(id);
+            experience.setLikesCount(likesCount != null ? likesCount : 0);
+        } catch (Exception e) {
+            // If likes service is down, keep existing count
+            System.out.println("Could not fetch likes count: " + e.getMessage());
+        }
+        
+        return experience;
     }
 
     @Override
