@@ -14,11 +14,10 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
         </processorPath>
         <module name="likes" />
       </profile>
-      <profile name="Annotation profile for Tag-service" enabled="true">
+      <profile name="Annotation profile for User" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -30,9 +29,13 @@
         <module name="User" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="EurekaServer" target="25" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="EurekaServer" options="-parameters" />
       <module name="Experiemce-service" options="-parameters" />
       <module name="Tag-service" options="-parameters" />
       <module name="User" options="-parameters" />
