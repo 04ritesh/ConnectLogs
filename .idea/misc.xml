@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/Tag-service/pom.xml" />
         <option value="$PROJECT_DIR$/Likes-service/pom.xml" />
         <option value="$PROJECT_DIR$/EurekaServer/pom.xml" />
+        <option value="$PROJECT_DIR$/Gateway/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

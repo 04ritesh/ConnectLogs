@@ -24,9 +24,10 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
         </processorPath>
-        <module name="Tag-service" />
         <module name="Experiemce-service" />
         <module name="User" />
+        <module name="Tag-service" />
+        <module name="Gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -37,6 +38,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="EurekaServer" options="-parameters" />
       <module name="Experiemce-service" options="-parameters" />
+      <module name="Gateway" options="-parameters" />
       <module name="Tag-service" options="-parameters" />
       <module name="User" options="-parameters" />
       <module name="likes" options="-parameters" />
