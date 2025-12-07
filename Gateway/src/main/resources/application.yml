@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      mvc:
+        routes:
+        - id: user-service
+          uri: http://localhost:8081
+          predicates:
+          - Path=/api/users/**
+        - id: like-service
+          uri: http://localhost:9000
+          predicates:
+          - Path=/api/likes/**
+        - id: tag-service
+          uri: http://localhost:8083
+          predicates:
+          - Path=/api/tags/**
+        - id: experience-service
+          uri: http://localhost:8082
+          predicates:
+          - Path=/api/experiences/**
