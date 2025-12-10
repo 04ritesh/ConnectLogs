@@ -49,7 +49,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "gateway",
+    "git-widget-placeholder": "keyclock",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Desktop/ConnectLogs/Likes-service/src/main/java/com/likes/likes",
@@ -143,11 +143,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GatewayApplication" />
-        <item itemvalue="Application.UserApplication" />
         <item itemvalue="Application.TagServiceApplication" />
+        <item itemvalue="Application.UserApplication" />
         <item itemvalue="Application.LikesApplication" />
         <item itemvalue="Application.ExperienceServiceApplication" />
+        <item itemvalue="Application.GatewayApplication" />
       </list>
     </recent_temporary>
   </component>
