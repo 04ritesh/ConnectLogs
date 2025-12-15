@@ -143,8 +143,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TagServiceApplication" />
         <item itemvalue="Application.UserApplication" />
+        <item itemvalue="Application.TagServiceApplication" />
         <item itemvalue="Application.LikesApplication" />
         <item itemvalue="Application.ExperienceServiceApplication" />
         <item itemvalue="Application.GatewayApplication" />
