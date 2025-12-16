@@ -1,76 +1,84 @@
 package com.example.Experience_service.service.impl;
 
-import com.example.Experience_service.client.UserClient;
-import com.example.Experience_service.dto.UserResponse;
+import com.example.Experience_service.client.TagClient;
+import com.example.Experience_service.client.LikesClient;
+import com.example.Experience_service.dto.ExperienceRequest;
 import com.example.Experience_service.entity.Experience;
+import com.example.Experience_service.entity.ExperienceTag;
+import com.example.Experience_service.entity.ExperienceTagId;
 import com.example.Experience_service.repository.ExperienceRepository;
+import com.example.Experience_service.repository.ExperienceTagRepository;
 import com.example.Experience_service.service.ExperienceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class ExperienceServiceImpl implements ExperienceService {
 
     private final ExperienceRepository experienceRepository;
-    private final UserClient userClient;
+    private final ExperienceTagRepository experienceTagRepository;
+    private final TagClient tagClient;
+    private final LikesClient likesClient;
 
     @Override
-    public Experience saveExperience(Experience experience) {
+    public Experience createExperience(ExperienceRequest request, Long userId) {
 
-        // 🔍 1. Validate user via User Service
-        UserResponse user = userClient.getUserById(experience.getUserId());
-        if (user == null) {
-            throw new RuntimeException("User not found with id: " + experience.getUserId());
+
+
+        Experience exp = new Experience();
+        exp.setUserId(userId);
+        exp.setTitle(request.getTitle());
+        exp.setContent(request.getContent());
+
+        Experience saved = experienceRepository.save(exp);
+
+        if (request.getTags() != null && !request.getTags().isEmpty()) {
+
+            // CALL TAG SERVICE USING REST TEMPLATE
+            List<Long> tagIds = tagClient.createAndReturnTagIds(request.getTags());
+
+            // SAVE IN EXPERIENCE_TAG TABLE
+            for (Long tagId : tagIds) {
+                ExperienceTag et = new ExperienceTag();
+                ExperienceTagId id = new ExperienceTagId(saved.getId(), tagId);
+                et.setId(id);
+
+                experienceTagRepository.save(et);
+            }
         }
 
-        // 🔍 2. Validate that user is ACTIVE (optional)
-        if ("BLOCKED".equalsIgnoreCase(user.getStatus())) {
-            throw new RuntimeException("This user is blocked, cannot create experience.");
+        return saved;
+    }
+
+    @Override
+    public Experience getExperienceById(Long id) {
+        Experience experience = experienceRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Experience not found with id: " + id));
+        
+        // Fetch current likes count from Likes service
+        try {
+            Integer likesCount = likesClient.getLikesCount(id);
+            experience.setLikesCount(likesCount != null ? likesCount : 0);
+        } catch (Exception e) {
+            // If likes service is down, keep existing count
+            System.out.println("Could not fetch likes count: " + e.getMessage());
         }
-
-        // 🔥 3. Save experience
-        return experienceRepository.save(experience);
+        
+        return experience;
     }
 
     @Override
-    public Optional<Experience> getExperienceById(Long id) {
-        return experienceRepository.findById(id);
+    @Transactional
+    public void updateLikesCount(Long expId, int count) {
+        experienceRepository.updateLikesCount(expId, count);
     }
 
-    @Override
-    public Optional<Experience> getExperienceBySlug(String slug) {
-        return experienceRepository.findBySlug(slug);
-    }
 
-    @Override
-    public List<Experience> getAllExperiences() {
-        return experienceRepository.findAll();
-    }
 
-    @Override
-    public void deleteExperience(Long id) {
-        experienceRepository.deleteById(id);
-    }
-
-    @Override
-    public void incrementViews(Long id) {
-        experienceRepository.findById(id).ifPresent(exp -> {
-            exp.setViewsCount(exp.getViewsCount() + 1);
-            experienceRepository.save(exp);
-        });
-    }
-
-    @Override
-    public void incrementLikes(Long id) {
-        experienceRepository.findById(id).ifPresent(exp -> {
-            exp.setLikesCount(exp.getLikesCount() + 1);
-            experienceRepository.save(exp);
-        });
-    }
 }
