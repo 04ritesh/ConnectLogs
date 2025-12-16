@@ -7,9 +7,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Gateway" />
       </profile>
-      <profile name="Annotation profile for User" enabled="true">
+      <profile name="Annotation profile for Gateway" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -19,6 +18,7 @@
         <module name="Experiemce-service" />
         <module name="User" />
         <module name="Tag-service" />
+        <module name="Gateway" />
         <module name="likes" />
       </profile>
     </annotationProcessing>

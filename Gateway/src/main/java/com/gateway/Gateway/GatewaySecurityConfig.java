@@ -12,16 +12,11 @@ public class GatewaySecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> {})          // 🔥 Mandatory empty lambda
+                        .anyRequest().permitAll()
                 );
-
         return http.build();
     }
 }
