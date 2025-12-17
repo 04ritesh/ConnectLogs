@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/experiences")
@@ -22,6 +23,10 @@ public class ExperienceController {
         return experienceService.createExperience(request, userId);
     }
 
+    @GetMapping
+    public List<Experience> getAllExperiences() {
+        return experienceService.getAllExperiences();
+    }
 
     @GetMapping("/{id}")
     public Experience getExperience(@PathVariable Long id) {

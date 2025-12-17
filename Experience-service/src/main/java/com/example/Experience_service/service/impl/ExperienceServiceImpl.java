@@ -57,6 +57,11 @@ public class ExperienceServiceImpl implements ExperienceService {
     }
 
     @Override
+    public List<Experience> getAllExperiences() {
+        return experienceRepository.findAll();
+    }
+
+    @Override
     public Experience getExperienceById(Long id) {
         Experience experience = experienceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Experience not found with id: " + id));
