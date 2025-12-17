@@ -13,7 +13,7 @@ public class TagClient {
 
     private final RestTemplate restTemplate;
 
-    private final String TAG_SERVICE_BASE_URL = "http://localhost:8083/api/tags";
+    private final String TAG_SERVICE_BASE_URL = "https://triumphant-flexibility-production.up.railway.app/api/tags";
 
     // POST → Create Tags & Return Tag IDs
     public List<Long> createAndReturnTagIds(List<String> tagNames) {

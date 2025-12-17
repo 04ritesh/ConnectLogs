@@ -10,7 +10,7 @@ public class LikesClient {
     
     public Integer getLikesCount(Long experienceId) {
         try {
-            String url = "http://localhost:9000/api/likes/experience/" + experienceId + "/count";
+            String url = "https://connectlogs-production-640c.up.railway.app/api/likes/experience/" + experienceId + "/count";
             System.out.println("Calling Likes service: " + url);
             Integer count = restTemplate.getForObject(url, Integer.class);
             System.out.println("Received likes count: " + count);
